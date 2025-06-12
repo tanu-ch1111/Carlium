@@ -1,0 +1,482 @@
+/* 基本的なリセットとフォント設定 */
+body {
+    font-family: 'Roboto', sans-serif; /* モダンなフォントに変更 */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #000000; /* 背景色を真っ黒に維持 */
+    color: #f0f0f0; /* 全体的な文字色を明るめに変更 */
+    -webkit-font-smoothing: antialiased; /* フォントの表示を滑らかに */
+    scroll-behavior: smooth; /* スムーズスクロール */
+}
+
+.container {
+    width: 90%; /* 幅を少し広めに */
+    max-width: 1200px; /* 最大幅を設定 */
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* ヘッダー */
+header {
+    background: linear-gradient(to right, #1a1a1a, #0a0a0a); /* より暗いグラデーション */
+    color: #fff;
+    padding: 30px 0;
+    min-height: 80px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 影を強調 */
+    text-align: center;
+}
+
+.header-icon {
+    width: 80px; /* アイコンのサイズ */
+    height: 80px;
+    border-radius: 15px; /* 角を少し丸く */
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    vertical-align: middle;
+}
+
+header h1 {
+    margin: 0;
+    padding-bottom: 5px;
+    font-size: 3.2em; /* 少し大きく */
+    color: #00BCD4; /* シアン系の水色をH1に */
+    font-family: 'Poppins', sans-serif; /* 見出しフォント */
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+}
+
+header p {
+    font-size: 1.3em; /* 少し大きく */
+    margin-top: 5px;
+    font-weight: 300;
+    color: #e0e0e0;
+}
+
+header nav ul {
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}
+
+header nav li {
+    display: inline-block; /* インラインブロックに変更 */
+    padding: 0 20px;
+}
+
+header nav a {
+    color: #f0f0f0; /* 文字色を明るめに */
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 400;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    padding-bottom: 5px; /* 下線のために余白 */
+}
+
+header nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #00BCD4; /* 下線の色をシアン系の水色に */
+    transition: width 0.4s ease;
+    -webkit-transition: width 0.4s ease;
+}
+
+header nav a:hover::after {
+    width: 100%;
+    left: 0;
+    background: #00BCD4;
+}
+
+header nav a:hover {
+    color: #00BCD4;
+    transform: translateY(-2px);
+}
+
+/* ヒーローセクション */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/minecraft_bg_189.jpg') no-repeat center center/cover; /* オーバーレイを濃く */
+    color: #fff;
+    text-align: center;
+    padding: 150px 0; /* 上下により大きな余白 */
+    position: relative;
+    display: flex; /* 中央揃えのためにフレックスボックス */
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* 画面の高さの最小値 */
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h2 {
+    font-size: 3.8em; /* 非常に大きく */
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+    color: #4DD0E1; /* ヒーローセクションの見出しも明るい水色系に */
+}
+
+.hero-section p {
+    font-size: 1.5em; /* 大きく */
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+/* ボタン */
+.button {
+    display: inline-block;
+    color: #fff;
+    background: #00BCD4; /* ボタンの色をシアン系の水色に */
+    padding: 15px 35px; /* パディングを増やす */
+    text-decoration: none;
+    border-radius: 50px; /* 丸みを帯びたボタン */
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-size: 1.2em; /* 少し大きく */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* 影を強調 */
+}
+
+.button:hover {
+    background: #00ACC1; /* ホバーで少し暗く */
+    transform: translateY(-3px); /* わずかに上に移動 */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+}
+
+.primary-button {
+    background: #4CAF50; /* ダウンロードボタンはグリーン系 (前回と同じ) */
+}
+
+.primary-button:hover {
+    background: #43a047;
+}
+
+
+/* セクション共通スタイル */
+section {
+    padding: 80px 0; /* 上下の余白を増やす */
+    border-bottom: 1px solid #333; /* 暗めの線 */
+    text-align: center;
+    background-color: #1a1a1a; /* 暗めの背景色 */
+    color: #f0f0f0; /* 文字色を明るめに */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 柔らかな影 */
+    margin-bottom: 30px; /* セクション間の余白 */
+    border-radius: 8px; /* 角を丸く */
+}
+
+section:last-of-type {
+    border-bottom: none; /* 最後のセクションには下線なし */
+    margin-bottom: 0;
+}
+
+section h2 {
+    font-size: 3em; /* 大きく */
+    margin-bottom: 40px;
+    color: #00BCD4; /* 見出し色をシアン系の水色に */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 80px; /* 長く */
+    height: 5px; /* 太く */
+    background: #00BCD4; /* アクセントカラーをシアン系の水色に */
+    margin: 15px auto 0;
+    border-radius: 3px; /* 角を丸く */
+}
+
+/* About, FAQセクションの段落 */
+.about-section p, .faq-section p {
+    color: #cccccc; /* 全体的な文字色より少し濃い目に */
+}
+
+/* Featuresセクション */
+.features-section {
+    background: #2a2a2a; /* やや異なる背景色 */
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px; /* ギャップを大きく */
+    text-align: left;
+    margin-top: 50px;
+}
+
+.feature-item {
+    background: #333333; /* カードの背景色を暗めに */
+    padding: 30px; /* パディングを増やす */
+    border-radius: 12px; /* より丸く */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4); /* 柔らかな影 */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border-left: 5px solid #4DD0E1; /* 左側に明るい水色のアクセント線 */
+}
+
+.feature-item:hover {
+    transform: translateY(-8px); /* 大きめに移動 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.feature-item h3 {
+    color: #00BCD4; /* 見出し色をシアン系の水色に */
+    margin-top: 0;
+    font-size: 1.8em; /* 大きく */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.feature-item p {
+    font-size: 1.05em;
+    color: #cccccc; /* 明るめの文字色 */
+}
+
+/* Downloadセクション */
+.download-links {
+    margin-bottom: 50px;
+}
+
+.download-links p {
+    font-size: 1.2em;
+    margin-top: 25px;
+    color: #cccccc;
+}
+
+.download-section ol {
+    text-align: left;
+    max-width: 700px;
+    margin: 40px auto;
+    list-style-type: none; /* デフォルトのリストスタイルを無効化 */
+    padding-left: 0; /* デフォルトのパディングを削除 */
+    counter-reset: download-step; /* カウンターをリセット */
+}
+
+.download-section ol li {
+    margin-bottom: 20px;
+    font-size: 1.15em;
+    padding-left: 45px; /* 数字分のパディング */
+    position: relative;
+    color: #cccccc;
+}
+
+.download-section ol li::before {
+    counter-increment: download-step; /* カウンターを増やす */
+    content: counter(download-step); /* 数字を表示 */
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #00BCD4; /* 数字の背景色をシアン系の水色に */
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.warning {
+    background-color: #333300; /* 暗めの警告色 */
+    border-left: 5px solid #FFD54F; /* 明るめの警告色のボーダー (オレンジ系) */
+    padding: 15px 20px;
+    margin-top: 30px;
+    border-radius: 8px;
+    text-align: left;
+    color: #ffeb3b; /* 警告文字色を明るい黄色に */
+    display: flex;
+    align-items: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.warning .inline-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* FAQセクション */
+.faq-item {
+    background: #1a1a1a; /* カードの背景色を暗めに */
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    padding: 25px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+}
+
+.faq-item h3 {
+    color: #00BCD4; /* 濃いめの水色 */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.35em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.faq-item h3::after {
+    content: '+'; /* アコーディオンのアイコン */
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+    color: #00BCD4; /* アイコンの色を水色に */
+}
+
+.faq-item h3.active::after {
+    content: '-';
+    transform: rotate(180deg); /* active時にアイコンを回転 */
+}
+
+.faq-item p {
+    display: none; /* 初期は非表示 */
+    margin-bottom: 0;
+    padding-top: 15px;
+    border-top: 1px solid #444; /* ボーダーを暗めに */
+    color: #cccccc;
+    line-height: 1.8;
+    /* JavaScriptで制御するための初期スタイル */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* フッター */
+footer {
+    background: #0a0a0a; /* より暗い背景色 */
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 50px;
+    font-size: 0.95em;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px 0;
+    }
+
+    header {
+        padding: 20px 0;
+    }
+
+    .header-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    header h1 {
+        font-size: 2.2em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    header nav ul {
+        margin-top: 15px;
+    }
+
+    header nav li {
+        display: block;
+        padding: 8px 0;
+    }
+
+    .hero-section {
+        padding: 80px 0;
+        min-height: auto;
+    }
+
+    .hero-section h2 {
+        font-size: 2.5em;
+    }
+
+    .hero-section p {
+        font-size: 1.1em;
+    }
+
+    .button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    section {
+        padding: 50px 0;
+    }
+
+    section h2 {
+        font-size: 2.2em;
+        margin-bottom: 30px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .feature-item {
+        padding: 20px;
+    }
+
+    .feature-item h3 {
+        font-size: 1.6em;
+    }
+
+    .download-section ol {
+        margin: 20px auto;
+    }
+
+    .download-section ol li {
+        font-size: 1em;
+        padding-left: 40px;
+    }
+
+    .warning {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .faq-item {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .faq-item h3 {
+        font-size: 1.2em;
+    }
+}
