@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,22 +18,45 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import carlium.Config;
+
 public class BlockOptimizer {
 
-    private static final int SCAN_RANGE_CHUNK = 2;
-    private static final int CHAT_MESSAGE_INTERVAL_TICKS = 200;
-    private static final int OPTIMIZATION_CHUNK_UPDATE_INTERVAL_TICKS = 60;
-    private static final int MAX_OPTIMIZED_BLOCKS_PER_CHUNK = 200;
+    private static int SCAN_RANGE_CHUNK = 2;
+    private static int OPTIMIZATION_CHUNK_UPDATE_INTERVAL_TICKS = 60;
+    private static int MAX_OPTIMIZED_BLOCKS_PER_CHUNk = 200;
+
+    private static boolean enabled = true;
 
     private final ConcurrentHashMap<ChunkCoordIntPair, Set<BlockPos>> optimizedBlocksInChunks = new ConcurrentHashMap<>();
 
     private final ExecutorService scanExecutor = Executors.newSingleThreadExecutor();
 
     private int tickCounter = 0;
-    private int totalSkippedBlocksDisplayed = 0;
+
+    public static void setEnabled(boolean enabled) {
+        BlockOptimizer.enabled = enabled;
+    }
+
+    public static void setScanRangeChunk(int scanRangeChunk) {
+        SCAN_RANGE_CHUNK = scanRangeChunk;
+    }
+
+    public static void setOptimizationChunkUpdateIntervalTicks(int intervalTicks) {
+        OPTIMIZATION_CHUNK_UPDATE_INTERVAL_TICKS = intervalTicks;
+    }
+
+    public static void setMaxOptimizedBlocksPerChunk(int maxBlocksPerChunk) {
+        MAX_OPTIMIZED_BLOCKS_PER_CHUNk = maxBlocksPerChunk;
+    }
+
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (!enabled) {
+            return;
+        }
+
         if (event.phase == TickEvent.Phase.START) {
             Minecraft mc = Minecraft.getMinecraft();
             World world = mc.theWorld;
@@ -44,13 +66,6 @@ public class BlockOptimizer {
 
             if (tickCounter % OPTIMIZATION_CHUNK_UPDATE_INTERVAL_TICKS == 0) {
                 scanNearbyChunksForOptimization(world, mc.thePlayer.getPosition());
-            }
-
-            if (tickCounter >= CHAT_MESSAGE_INTERVAL_TICKS) {
-                if (totalSkippedBlocksDisplayed > 0) {
-                    mc.thePlayer.addChatMessage(new ChatComponentText("§b[Carlium] §fブロック最適化: " + totalSkippedBlocksDisplayed + "個の密閉ブロックを管理中"));
-                    totalSkippedBlocksDisplayed = 0;
-                }
                 tickCounter = 0;
             }
         }
@@ -58,6 +73,9 @@ public class BlockOptimizer {
 
     @SubscribeEvent
     public void onChunkLoad(ChunkEvent.Load event) {
+        if (!enabled) {
+            return;
+        }
         if (event.world.isRemote) {
             scanChunkForOptimization(event.world, event.getChunk().xPosition, event.getChunk().zPosition);
         }
@@ -65,6 +83,9 @@ public class BlockOptimizer {
 
     @SubscribeEvent
     public void onChunkUnload(ChunkEvent.Unload event) {
+        if (!enabled) {
+            return;
+        }
         if (event.world.isRemote) {
             optimizedBlocksInChunks.remove(new ChunkCoordIntPair(event.getChunk().xPosition, event.getChunk().zPosition));
         }
@@ -105,23 +126,26 @@ public class BlockOptimizer {
                         if (isFullySurrounded(world, pos)) {
                             currentChunkOptimizedBlocks.add(new BlockPos(x, y, z));
                             count++;
-                            if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNK) {
+                            if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNk) {
                                 break;
                             }
                         }
                     }
-                    if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNK) break;
+                    if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNk) break;
                 }
-                if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNK) break;
+                if (count >= MAX_OPTIMIZED_BLOCKS_PER_CHUNk) break;
             }
 
             ChunkCoordIntPair chunkCoord = new ChunkCoordIntPair(chunkX, chunkZ);
             optimizedBlocksInChunks.put(chunkCoord, currentChunkOptimizedBlocks);
-            totalSkippedBlocksDisplayed += count;
         });
     }
 
     public boolean shouldSkipRendering(World world, BlockPos globalPos) {
+        if (!enabled) {
+            return false;
+        }
+
         ChunkCoordIntPair chunkCoord = new ChunkCoordIntPair(globalPos.getX() >> 4, globalPos.getZ() >> 4);
         Set<BlockPos> optimizedBlocks = optimizedBlocksInChunks.get(chunkCoord);
         if (optimizedBlocks != null) {
