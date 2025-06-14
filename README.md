@@ -1,4 +1,7 @@
 # Carlium
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/ExDyl9Bs?label=Download&labelColor=%232D2D2D)](https://modrinth.com/mod/carlium)
+[![Modrinth Version](https://img.shields.io/modrinth/v/ExDyl9Bs?label=Latest%20version&labelColor=%232D2D2D)](https://modrinth.com/mod/carlium/versions)
+
 <img src="icon.png" width="128">
 
 ### This mod is currently under development.
