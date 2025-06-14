@@ -1,3 +1,6 @@
+# Carlium
+<img src="icon.png" width="128">
+
 ### This mod is currently under development.
 
 ## Reason for Creation
